@@ -38,9 +38,9 @@ class PolygonArt:
         turtle.colormode(255)
 
     def run(self):
-        choice = int(input("Which art do you want to generate? Enter a number between 1-9: "))
+        choice = int(input("Which art do you want to generate? Enter a number between 1-9 inclusive: "))
 
-        for i in range(30):
+        for i in range(25):
             size = random.randint(50, 150)
             orientation = random.randint(0, 90)
             location = [random.randint(-300, 300), random.randint(-200, 200)]
@@ -67,23 +67,19 @@ class PolygonArt:
                 polygon.draw()
             elif choice == 5:
                 num_sides = 3
-                embedded = EmbeddedPolygon(num_sides, size, orientation, location, color, border_size, num_levels,
-                                           reduction_ratio)
+                embedded = EmbeddedPolygon(num_sides, size, orientation, location, color, border_size, 3, 0.618)
                 embedded.draw()
             elif choice == 6:
                 num_sides = 4
-                embedded = EmbeddedPolygon(num_sides, size, orientation, location, color, border_size, num_levels,
-                                           reduction_ratio)
+                embedded = EmbeddedPolygon(num_sides, size, orientation, location, color, border_size, 3, 0.618)
                 embedded.draw()
             elif choice == 7:
                 num_sides = 5
-                embedded = EmbeddedPolygon(num_sides, size, orientation, location, color, border_size, num_levels,
-                                           reduction_ratio)
+                embedded = EmbeddedPolygon(num_sides, size, orientation, location, color, border_size, 3, 0.618)
                 embedded.draw()
             elif choice == 8:
                 num_sides = random.randint(3, 5)
-                embedded = EmbeddedPolygon(num_sides, size, orientation, location, color, border_size, num_levels,
-                                           reduction_ratio)
+                embedded = EmbeddedPolygon(num_sides, size, orientation, location, color, border_size, 3, 0.618)
                 embedded.draw()
             elif choice == 9:
                 num_sides = random.randint(3, 5)
@@ -104,12 +100,11 @@ class EmbeddedPolygon(Polygon):
         self.reduction_ratio = reduction_ratio
 
     def draw(self):
-        while self.num_levels > 0:
+        for level in range(self.num_levels):
             Polygon.draw(self)
             self.size *= self.reduction_ratio
             self.location[0] += self.size * (1 - self.reduction_ratio) / 2
             self.location[1] += self.size * (1 - self.reduction_ratio) / 2
-            self.num_levels -= 1
 
 
 polygon_art = PolygonArt()
